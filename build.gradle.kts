@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin")
     id("org.jlleitschuh.gradle.ktlint")
+    id("org.jooq.jooq-codegen-gradle")
 }
 
 group = "com.example"
