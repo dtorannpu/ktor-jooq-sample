@@ -7,6 +7,7 @@ plugins {
     id("io.ktor.plugin")
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jooq.jooq-codegen-gradle")
+    id("org.flywaydb.flyway")
 }
 
 group = "com.example"
