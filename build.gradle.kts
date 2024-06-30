@@ -3,8 +3,8 @@ val logbackVersion: String by project
 
 plugins {
     kotlin("jvm") version "2.0.0"
-    id("io.ktor.plugin") version "2.3.12"
-    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
+    id("io.ktor.plugin")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 group = "com.example"
