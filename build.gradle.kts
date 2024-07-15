@@ -41,7 +41,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
-    runtimeOnly("org.postgresql:postgresql:42.7.3")
+    // runtimeOnly("org.postgresql:postgresql:42.7.3")
+    runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
     jooqCodegen("org.postgresql:postgresql:42.7.3")
 }
 
