@@ -13,6 +13,7 @@ buildscript {
 plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin")
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jooq.jooq-codegen-gradle")
     id("org.flywaydb.flyway")
@@ -40,6 +41,8 @@ repositories {
 dependencies {
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
+    implementation("io.ktor:ktor-server-content-negotiation-jvm")
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.jooq:jooq:$jooqVersion")
     implementation("org.jooq:jooq-kotlin:$jooqVersion")

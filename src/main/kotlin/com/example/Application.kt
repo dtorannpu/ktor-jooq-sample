@@ -1,6 +1,10 @@
 package com.example
 
+import com.example.database.Module.databaseModules
 import com.example.plugins.configureRouting
+import com.example.plugins.configureSerialization
+import com.example.repository.Module.repositoryModules
+import com.example.service.Module.serviceModules
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer
@@ -16,6 +20,10 @@ fun main() {
 fun Application.module() {
     install(Koin) {
         slf4jLogger()
+        modules(databaseModules)
+        modules(repositoryModules)
+        modules(serviceModules)
     }
+    configureSerialization()
     configureRouting()
 }
