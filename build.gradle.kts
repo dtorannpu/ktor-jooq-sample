@@ -2,6 +2,7 @@ val kotlinVersion: String by project
 val logbackVersion: String by project
 val kotestVersion: String by project
 val jooqVersion: String by project
+val koinKtor: String by project
 
 buildscript {
     dependencies {
@@ -37,6 +38,8 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.jooq:jooq:$jooqVersion")
+    implementation("io.insert-koin:koin-ktor:$koinKtor")
+    implementation("io.insert-koin:koin-logger-slf4j:$koinKtor")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
