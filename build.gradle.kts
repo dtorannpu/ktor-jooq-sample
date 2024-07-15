@@ -47,7 +47,7 @@ tasks.withType<Test>().configureEach {
 }
 
 flyway {
-    url = "jdbc:postgresql://localhost:5432/${env.DB_NAME.value}"
+    url = "jdbc:postgresql://localhost:${env.DB_PORT.value}/${env.DB_NAME.value}"
     user = env.DB_USER.value
     password = env.DB_PASSWORD.value
 }
