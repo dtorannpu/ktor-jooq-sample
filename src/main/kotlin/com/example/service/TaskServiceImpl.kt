@@ -9,4 +9,8 @@ class TaskServiceImpl(
     private val taskRepository: TaskRepository,
 ) : TaskService {
     override suspend fun findAll(): List<Task> = taskRepository.findAll()
+
+    override suspend fun create() {
+        TODO("Not yet implemented")
+    }
 }

@@ -43,6 +43,8 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("io.ktor:ktor-server-content-negotiation-jvm")
     implementation("io.ktor:ktor-serialization-kotlinx-json")
+    implementation("io.ktor:ktor-server-request-validation")
+    implementation("io.ktor:ktor-server-status-pages")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.jooq:jooq:$jooqVersion")
     implementation("org.jooq:jooq-kotlin:$jooqVersion")

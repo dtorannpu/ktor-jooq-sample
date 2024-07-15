@@ -8,3 +8,9 @@ data class Task(
     val title: String,
     val description: String,
 )
+
+@Serializable
+data class CreateTask(
+    val title: String?,
+    val description: String?,
+)

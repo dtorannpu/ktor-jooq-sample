@@ -1,6 +1,8 @@
 package com.example
 
 import com.example.database.Module.databaseModules
+import com.example.plugins.configStatusPages
+import com.example.plugins.configureRequestValidation
 import com.example.plugins.configureRouting
 import com.example.plugins.configureSerialization
 import com.example.repository.Module.repositoryModules
@@ -25,5 +27,7 @@ fun Application.module() {
         modules(serviceModules)
     }
     configureSerialization()
+    configureRequestValidation()
+    configStatusPages()
     configureRouting()
 }
