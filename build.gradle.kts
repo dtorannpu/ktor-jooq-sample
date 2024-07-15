@@ -14,6 +14,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
     id("org.jooq.jooq-codegen-gradle")
     id("org.flywaydb.flyway")
+    id("co.uzzu.dotenv.gradle") version "4.0.0"
 }
 
 group = "com.example"
@@ -46,7 +47,7 @@ tasks.withType<Test>().configureEach {
 }
 
 flyway {
-    url = "jdbc:postgresql://localhost:5432/mydb"
-    user = "myuser"
-    password = "postgres"
+    url = "jdbc:postgresql://localhost:5432/${env.DB_NAME.value}"
+    user = env.DB_USER.value
+    password = env.DB_PASSWORD.value
 }
