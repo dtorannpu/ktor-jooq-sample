@@ -2,6 +2,12 @@ val kotlinVersion: String by project
 val logbackVersion: String by project
 val kotestVersion: String by project
 
+buildscript {
+    dependencies {
+        classpath("org.flywaydb:flyway-database-postgresql:10.15.0")
+    }
+}
+
 plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin")
@@ -32,8 +38,15 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    runtimeOnly("org.postgresql:postgresql:42.7.3")
 }
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+flyway {
+    url = "jdbc:postgresql://localhost:5432/mydb"
+    user = "myuser"
+    password = "postgres"
 }
