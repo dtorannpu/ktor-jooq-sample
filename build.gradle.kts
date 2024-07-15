@@ -29,6 +29,10 @@ application {
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
 }
 
+kotlin.sourceSets.main {
+    kotlin.srcDirs(layout.buildDirectory.dir("generated-sources/jooq"))
+}
+
 repositories {
     mavenCentral()
 }
@@ -38,22 +42,21 @@ dependencies {
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("org.jooq:jooq:$jooqVersion")
+    implementation("org.jooq:jooq-kotlin:$jooqVersion")
+    implementation("org.jooq:jooq-kotlin-coroutines:$jooqVersion")
     implementation("io.insert-koin:koin-ktor:$koinKtor")
     implementation("io.insert-koin:koin-logger-slf4j:$koinKtor")
+    implementation("io.r2dbc:r2dbc-pool:1.0.1.RELEASE")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
-    // runtimeOnly("org.postgresql:postgresql:42.7.3")
+    runtimeOnly("org.postgresql:postgresql:42.7.3")
     runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
     jooqCodegen("org.postgresql:postgresql:42.7.3")
     jooqCodegen("org.jooq:jooq:$jooqVersion")
     jooqCodegen("org.jooq:jooq-meta:$jooqVersion")
     jooqCodegen("org.jooq:jooq-codegen:$jooqVersion")
-}
-
-kotlin.sourceSets.main {
-    kotlin.srcDirs(layout.buildDirectory.dir("generated/jooq"))
 }
 
 tasks.withType<Test>().configureEach {
@@ -75,6 +78,9 @@ jooq {
             password = env.DB_PASSWORD.value
         }
         generator {
+            strategy {
+                name = "org.jooq.codegen.example.JPrefixGeneratorStrategy"
+            }
             database {
 
                 // The database dialect from jooq-meta. Available dialects are
@@ -163,6 +169,30 @@ jooq {
             // Generation flags: See advanced configuration properties
             generate {
                 name = "org.jooq.codegen.KotlinGenerator"
+                // Tell the KotlinGenerator to generate properties in addition to methods for these paths. Default is true.
+                isImplicitJoinPathsAsKotlinProperties = true
+
+                // Workaround for Kotlin generating setX() setters instead of setIsX() in byte code for mutable properties called
+                // <code>isX</code>. Default is true.
+                isKotlinSetterJvmNameAnnotationsOnIsPrefix = true
+
+                // Generate POJOs as data classes, when using the KotlinGenerator. Default is true.
+                isPojosAsKotlinDataClasses = true
+
+                // Generate non-nullable types on POJO attributes, where column is not null. Default is false.
+                isKotlinNotNullPojoAttributes = true
+
+                // Generate non-nullable types on Record attributes, where column is not null. Default is false.
+                isKotlinNotNullRecordAttributes = true
+
+                // Generate non-nullable types on interface attributes, where column is not null. Default is false.
+                isKotlinNotNullInterfaceAttributes = true
+
+                // Generate defaulted nullable POJO attributes. Default is true.
+                isKotlinDefaultedNullablePojoAttributes = false
+
+                // Generate defaulted nullable Record attributes. Default is true.
+                isKotlinDefaultedNullableRecordAttributes = false
             }
             target {
 
@@ -181,5 +211,14 @@ jooq {
                 isDaos = false
             }
         }
+    }
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            element.file.path.contains("generated-sources")
+        }
+        include("**/kotlin/**")
     }
 }
