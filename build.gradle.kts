@@ -44,6 +44,9 @@ dependencies {
     // runtimeOnly("org.postgresql:postgresql:42.7.3")
     runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
     jooqCodegen("org.postgresql:postgresql:42.7.3")
+    jooqCodegen("org.jooq:jooq:$jooqVersion")
+    jooqCodegen("org.jooq:jooq-meta:$jooqVersion")
+    jooqCodegen("org.jooq:jooq-codegen:$jooqVersion")
 }
 
 kotlin.sourceSets.main {
@@ -170,6 +173,9 @@ jooq {
 
                 // The destination directory of your generated classes
                 // directory = "/path/to/your/dir"
+            }
+            generate {
+                isDaos = false
             }
         }
     }
