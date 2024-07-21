@@ -23,19 +23,27 @@ class TaskRepositoryTest : RepositoryTest() {
 
         test("selectById") {
             runTest {
-                val connectionMono = Mono.from(connectionFactory.create())
                 val id =
-                    connectionMono
-                        .flatMapMany { connection ->
-                            connection
-                                .createStatement(
-                                    "INSERT INTO task(title, description) VALUES('test', 'hoge') RETURNING id",
-                                ).execute()
-                                .toMono()
-                                .flatMap { result ->
-                                    Mono.from(result.map { row, _ -> row["id"] as Int })
-                                }.doFinally { connection.close() }
-                        }.awaitSingle()
+                    Mono
+                        .usingWhen(
+                            connectionFactory.create().toMono(),
+                            { connection ->
+                                connection
+                                    .createStatement("TRUNCATE TABLE task")
+                                    .execute()
+                                    .toMono()
+                                    .then(
+                                        connection
+                                            .createStatement(
+                                                "INSERT INTO task(title, description) VALUES('test', 'hoge') RETURNING id",
+                                            ).execute()
+                                            .toMono(),
+                                    ).flatMap { result -> result.map { row, _ -> row["id"] as Int }.toMono() }
+                            },
+                            { connection: Connection -> connection.close().toMono() },
+                            { connection: Connection, _: Throwable -> connection.close().toMono() },
+                            { connection: Connection -> connection.close().toMono() },
+                        ).awaitSingle()
                 repo.selectById(id).shouldNotBeNull()
             }
         }
@@ -71,7 +79,7 @@ class TaskRepositoryTest : RepositoryTest() {
                                 ).then()
                         },
                         { connection: Connection -> connection.close().toMono() },
-                        { connection: Connection, throwable: Throwable -> connection.close().toMono() },
+                        { connection: Connection, _: Throwable -> connection.close().toMono() },
                         { connection: Connection -> connection.close().toMono() },
                     ).awaitFirstOrNull()
 
