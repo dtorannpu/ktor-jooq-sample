@@ -53,6 +53,7 @@ dependencies {
     implementation("io.insert-koin:koin-logger-slf4j:$koinKtor")
     implementation("io.r2dbc:r2dbc-pool:1.0.1.RELEASE")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.2")
+    implementation("io.ktor:ktor-client-content-negotiation")
     testImplementation("org.flywaydb:flyway-core:10.15.2")
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
