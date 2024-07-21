@@ -4,9 +4,11 @@ import com.example.database.TransactionAwareDSLContext
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.r2dbc.spi.Connection
+import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.test.runTest
 import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toMono
 
 class TaskRepositoryTest : RepositoryTest() {
     private lateinit var repo: TaskRepository
@@ -21,18 +23,16 @@ class TaskRepositoryTest : RepositoryTest() {
 
         test("selectById") {
             runTest {
-                val connectionMono = Mono.from(pool.create())
+                val connectionMono = Mono.from(connectionFactory.create())
                 val id =
                     connectionMono
                         .flatMapMany { connection ->
-                            Mono
-                                .from(
-                                    connection
-                                        .createStatement("INSERT INTO task(title, description) VALUES($1, $2) RETURNING id")
-                                        .bind("$1", "test")
-                                        .bind("$2", "hoge")
-                                        .execute(),
-                                ).flatMap { result ->
+                            connection
+                                .createStatement(
+                                    "INSERT INTO task(title, description) VALUES('test', 'hoge') RETURNING id",
+                                ).execute()
+                                .toMono()
+                                .flatMap { result ->
                                     Mono.from(result.map { row, _ -> row["id"] as Int })
                                 }.doFinally { connection.close() }
                         }.awaitSingle()
@@ -42,7 +42,40 @@ class TaskRepositoryTest : RepositoryTest() {
 
         test("findAll") {
             runTest {
-                repo.findAll().size shouldBeExactly 5
+                Mono
+                    .usingWhen(
+                        connectionFactory.create().toMono(),
+                        { connection ->
+                            connection
+                                .createStatement("TRUNCATE TABLE task")
+                                .execute()
+                                .toMono()
+                                .then(
+                                    connection
+                                        .createStatement(
+                                            "INSERT INTO task(title, description) VALUES('test', 'hoge')",
+                                        ).execute()
+                                        .toMono(),
+                                ).then(
+                                    connection
+                                        .createStatement(
+                                            "INSERT INTO task(title, description) VALUES('test', 'hoge')",
+                                        ).execute()
+                                        .toMono(),
+                                ).then(
+                                    connection
+                                        .createStatement(
+                                            "INSERT INTO task(title, description) VALUES('test', 'hoge')",
+                                        ).execute()
+                                        .toMono(),
+                                ).then()
+                        },
+                        { connection: Connection -> connection.close().toMono() },
+                        { connection: Connection, throwable: Throwable -> connection.close().toMono() },
+                        { connection: Connection -> connection.close().toMono() },
+                    ).awaitFirstOrNull()
+
+                repo.findAll().size shouldBeExactly 3
             }
         }
     }

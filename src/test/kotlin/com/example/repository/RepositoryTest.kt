@@ -17,7 +17,7 @@ import org.jooq.impl.DSL
 import org.testcontainers.containers.PostgreSQLContainer
 
 abstract class RepositoryTest : FunSpec() {
-    lateinit var pool: ConnectionFactory
+    lateinit var connectionFactory: ConnectionFactory
     lateinit var dslContext: DSLContext
 
     init {
@@ -29,7 +29,7 @@ abstract class RepositoryTest : FunSpec() {
                 .migrate()
         }
         beforeEach {
-            pool =
+            connectionFactory =
                 ConnectionFactories.get(
                     ConnectionFactoryOptions
                         .builder()
@@ -42,7 +42,7 @@ abstract class RepositoryTest : FunSpec() {
                         .option(DATABASE, db.databaseName)
                         .build(),
                 )
-            dslContext = DSL.using(pool).dsl()
+            dslContext = DSL.using(connectionFactory).dsl()
         }
     }
 
