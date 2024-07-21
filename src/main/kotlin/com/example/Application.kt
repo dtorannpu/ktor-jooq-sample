@@ -6,7 +6,7 @@ import com.example.plugins.configureRequestValidation
 import com.example.plugins.configureRouting
 import com.example.plugins.configureSerialization
 import com.example.repository.Module.repositoryModules
-import com.example.service.Module.serviceModules
+import com.example.usecase.Module.serviceModules
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.engine.embeddedServer

@@ -1,10 +1,10 @@
-package com.example.service
+package com.example.usecase
 
 import org.koin.dsl.module
 
 object Module {
     val serviceModules =
         module {
-            factory<TaskService> { TaskServiceImpl(get(), get()) }
+            factory<TaskUseCase> { TaskUseCaseImpl(get(), get()) }
         }
 }
