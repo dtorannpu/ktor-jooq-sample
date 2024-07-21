@@ -1,8 +1,10 @@
 package com.example.repository
 
 import com.example.database.TransactionAwareDSLContext
+import com.example.model.CreateTask
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.nulls.shouldNotBeNull
+import io.kotest.matchers.shouldBe
 import io.r2dbc.spi.Connection
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
@@ -12,8 +14,6 @@ import reactor.kotlin.core.publisher.toMono
 
 class TaskRepositoryTest : RepositoryTest() {
     private lateinit var repo: TaskRepository
-
-    fun close(connection: Connection): Mono<Void> = Mono.from(connection.close())
 
     init {
         beforeEach {
@@ -76,7 +76,7 @@ class TaskRepositoryTest : RepositoryTest() {
                                             "INSERT INTO task(title, description) VALUES('test', 'hoge')",
                                         ).execute()
                                         .toMono(),
-                                ).then()
+                                )
                         },
                         { connection: Connection -> connection.close().toMono() },
                         { connection: Connection, _: Throwable -> connection.close().toMono() },
@@ -84,6 +84,36 @@ class TaskRepositoryTest : RepositoryTest() {
                     ).awaitFirstOrNull()
 
                 repo.findAll().size shouldBeExactly 3
+            }
+        }
+        test("create") {
+            runTest {
+                val task = CreateTask("title1", "description1")
+
+                val id = repo.create(task)
+
+                Mono
+                    .usingWhen(
+                        connectionFactory.create().toMono(),
+                        { connection ->
+                            connection
+                                .createStatement("SELECT id, title, description FROM task WHERE id = $1")
+                                .bind("$1", id)
+                                .execute()
+                                .toMono()
+                                .flatMap { result ->
+                                    result
+                                        .map { row, _ ->
+                                            row["id"] as Int shouldBe id
+                                            row["title"] as String shouldBe task.title
+                                            row["description"] as String shouldBe task.description
+                                        }.toMono()
+                                }
+                        },
+                        { connection: Connection -> connection.close().toMono() },
+                        { connection: Connection, _: Throwable -> connection.close().toMono() },
+                        { connection: Connection -> connection.close().toMono() },
+                    ).awaitFirstOrNull()
             }
         }
     }

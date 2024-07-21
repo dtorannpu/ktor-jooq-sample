@@ -1,6 +1,6 @@
 package com.example.plugins
 
-import com.example.model.CreateTask
+import com.example.model.CreateTaskRequest
 import com.example.service.TaskService
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
@@ -24,7 +24,7 @@ fun Application.configureRouting() {
             call.respond(HttpStatusCode.OK, tasks)
         }
         post("/tasks") {
-            val task = call.receive<CreateTask>()
+            val task = call.receive<CreateTaskRequest>()
             call.respond(HttpStatusCode.Created, task)
         }
     }

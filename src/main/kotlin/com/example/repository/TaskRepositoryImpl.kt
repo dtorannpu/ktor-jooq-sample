@@ -2,6 +2,7 @@ package com.example.repository
 
 import com.example.database.TransactionAwareDSLContext
 import com.example.db.tables.references.TASK
+import com.example.model.CreateTask
 import com.example.model.Task
 import kotlinx.coroutines.reactive.awaitFirstOrNull
 import kotlinx.coroutines.reactive.awaitSingle
@@ -25,4 +26,14 @@ class TaskRepositoryImpl(
                 Task(it.id!!, it.title!!, it.description!!)
             }.collectList()
             .awaitSingle()
+
+    override suspend fun create(task: CreateTask): Int =
+        dslContext
+            .get()
+            .insertInto(TASK)
+            .columns(TASK.TITLE, TASK.DESCRIPTION)
+            .values(task.title, task.description)
+            .returningResult(TASK.ID)
+            .awaitSingle()
+            .map { it[TASK.ID] }
 }

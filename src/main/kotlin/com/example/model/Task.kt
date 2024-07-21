@@ -10,7 +10,12 @@ data class Task(
 )
 
 @Serializable
-data class CreateTask(
+data class CreateTaskRequest(
     val title: String?,
     val description: String?,
+)
+
+data class CreateTask(
+    val title: String,
+    val description: String,
 )
