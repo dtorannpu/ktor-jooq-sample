@@ -12,6 +12,8 @@ class TaskUseCaseImpl(
 ) : TaskUseCase {
     override suspend fun findAll(): List<Task> = taskRepository.findAll()
 
+    override suspend fun findById(id: Int): Task? = taskRepository.selectById(id)
+
     override suspend fun create(createTaskRequest: CreateTaskRequest) =
         transactionCoroutineOperator.execute {
             val task = CreateTask(createTaskRequest.title!!, createTaskRequest.description!!)

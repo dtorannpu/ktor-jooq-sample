@@ -60,6 +60,7 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
     testImplementation("io.kotest.extensions:kotest-assertions-ktor:2.0.0")
     testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:2.0.2")
+    testImplementation("io.kotest:kotest-assertions-json:$kotestVersion")
     testImplementation("org.testcontainers:postgresql:1.19.8")
     runtimeOnly("org.postgresql:postgresql:42.7.3")
     testRuntimeOnly("org.postgresql:postgresql:42.7.3")
