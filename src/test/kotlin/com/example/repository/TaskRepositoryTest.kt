@@ -28,17 +28,15 @@ class TaskRepositoryTest : RepositoryTest() {
                             Mono
                                 .from(
                                     connection
-                                        .createStatement("INSERT INTO sample.task(title, description) VALUES($1, $2) RETURNING id")
+                                        .createStatement("INSERT INTO task(title, description) VALUES($1, $2) RETURNING id")
                                         .bind("$1", "test")
                                         .bind("$2", "hoge")
                                         .execute(),
                                 ).flatMap { result ->
                                     Mono.from(result.map { row, _ -> row["id"] as Int })
-                                }.doFinally {
-                                    connection.close()
-                                }
+                                }.doFinally { connection.close() }
                         }.awaitSingle()
-                repo.selectById(2).shouldNotBeNull()
+                repo.selectById(id).shouldNotBeNull()
             }
         }
 

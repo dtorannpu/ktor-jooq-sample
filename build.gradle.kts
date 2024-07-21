@@ -165,7 +165,7 @@ jooq {
                 // All elements that are excluded from your schema (A Java regular expression.
                 // Use the pipe to separate several expressions). Excludes match before
                 // includes, i.e. excludes have a higher priority
-                excludes = ""
+                excludes = "flyway_schema_history"
 
                 // The schema that is used locally as a source for meta information.
                 // This could be your development schema or the production schema, etc
@@ -173,7 +173,7 @@ jooq {
                 //
                 // If left empty, jOOQ will generate all available schemata. See the
                 // manual's next section to learn how to generate several schemata
-                inputSchema = "sample"
+                inputSchema = "public"
             }
 
             // Generation flags: See advanced configuration properties
