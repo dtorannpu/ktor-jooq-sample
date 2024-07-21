@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.database.Module.databaseModules
+import com.example.database.DatabaseModule
 import com.example.plugins.configStatusPages
 import com.example.plugins.configureRequestValidation
 import com.example.plugins.configureRouting
@@ -22,7 +22,7 @@ fun main() {
 fun Application.module() {
     install(Koin) {
         slf4jLogger()
-        modules(databaseModules)
+        modules(DatabaseModule("localhost", 5432, "myuser", "postgres", "mydb").databaseModules())
         modules(repositoryModules)
         modules(serviceModules)
     }

@@ -13,8 +13,14 @@ import io.r2dbc.spi.ConnectionFactoryOptions.USER
 import org.jooq.impl.DSL
 import org.koin.dsl.module
 
-object Module {
-    val databaseModules =
+class DatabaseModule(
+    private val host: String,
+    private val port: Int,
+    private val user: String,
+    private val password: String,
+    private val database: String,
+) {
+    fun databaseModules() =
         module {
             single {
                 ConnectionFactories.get(
@@ -22,11 +28,11 @@ object Module {
                         .builder()
                         .option(DRIVER, "pool")
                         .option(PROTOCOL, "postgresql")
-                        .option(HOST, "localhost")
-                        .option(PORT, 5432)
-                        .option(USER, "myuser")
-                        .option(PASSWORD, "postgres")
-                        .option(DATABASE, "mydb")
+                        .option(HOST, host)
+                        .option(PORT, port)
+                        .option(USER, user)
+                        .option(PASSWORD, password)
+                        .option(DATABASE, database)
                         .build(),
                 )
             }
