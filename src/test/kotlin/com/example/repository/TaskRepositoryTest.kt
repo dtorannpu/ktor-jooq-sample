@@ -2,6 +2,7 @@ package com.example.repository
 
 import com.example.database.TransactionAwareDSLContext
 import com.example.model.CreateTask
+import com.example.plugins.RoutingTestBase.Companion.db
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
@@ -11,14 +12,21 @@ import kotlinx.coroutines.reactive.awaitSingle
 import kotlinx.coroutines.test.runTest
 import reactor.core.publisher.Mono
 import reactor.kotlin.core.publisher.toMono
+import java.sql.DriverManager
 
 class TaskRepositoryTest : RepositoryTest() {
+    private lateinit var connection: java.sql.Connection
     private lateinit var repo: TaskRepository
 
     init {
         beforeEach {
+            connection = DriverManager.getConnection(db.jdbcUrl, db.username, db.password)
             val t = TransactionAwareDSLContext(dslContext)
             repo = TaskRepositoryImpl(t)
+        }
+
+        afterEach {
+            connection.close()
         }
 
         test("selectById") {
@@ -86,6 +94,7 @@ class TaskRepositoryTest : RepositoryTest() {
                 repo.findAll().size shouldBeExactly 3
             }
         }
+
         test("create") {
             runTest {
                 val task = CreateTask("title1", "description1")
@@ -114,6 +123,33 @@ class TaskRepositoryTest : RepositoryTest() {
                         { connection: Connection, _: Throwable -> connection.close().toMono() },
                         { connection: Connection -> connection.close().toMono() },
                     ).awaitFirstOrNull()
+            }
+        }
+
+        test("delete") {
+            runTest {
+                val id =
+                    Mono
+                        .usingWhen(
+                            connectionFactory.create().toMono(),
+                            { connection ->
+                                connection
+                                    .createStatement("TRUNCATE TABLE task")
+                                    .execute()
+                                    .toMono()
+                                    .then(
+                                        connection
+                                            .createStatement(
+                                                "INSERT INTO task(title, description) VALUES('test', 'hoge') RETURNING id",
+                                            ).execute()
+                                            .toMono(),
+                                    ).flatMap { result -> result.map { row, _ -> row["id"] as Int }.toMono() }
+                            },
+                            { connection: Connection -> connection.close().toMono() },
+                            { connection: Connection, _: Throwable -> connection.close().toMono() },
+                            { connection: Connection -> connection.close().toMono() },
+                        ).awaitSingle()
+                repo.delete(id) shouldBe 1
             }
         }
     }

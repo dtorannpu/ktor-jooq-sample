@@ -9,4 +9,6 @@ interface TaskRepository {
     suspend fun findAll(): List<Task>
 
     suspend fun create(task: CreateTask): Int
+
+    suspend fun delete(id: Int): Int
 }

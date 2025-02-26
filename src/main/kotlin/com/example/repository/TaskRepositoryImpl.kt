@@ -36,4 +36,12 @@ class TaskRepositoryImpl(
             .returningResult(TASK.ID)
             .awaitSingle()
             .map { it[TASK.ID] }
+
+    override suspend fun delete(id: Int) : Int {
+        return dslContext
+            .get()
+            .deleteFrom(TASK)
+            .where(TASK.ID.eq(id))
+            .awaitSingle()
+    }
 }
