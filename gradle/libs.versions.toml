@@ -1,21 +1,21 @@
 [versions]
-kotlin = "2.0.0"
-ktor = "2.3.12"
+kotlin = "2.1.10"
+ktor = "3.1.1"
 co-uzzu-dotenv-gradle = "4.0.0"
-org-jlleitschuh-gradle-ktlint = "12.1.1"
-jooq = "3.19.10"
-flyway = "10.15.0"
-logback = "1.4.14"
-koin-ktor = "3.5.6"
-io-r2dbc-r2dbc-pool = "1.0.1.RELEASE"
-io-projectreactor-kotlin-reactor-kotlin-extensions = "1.2.2"
+org-jlleitschuh-gradle-ktlint = "12.2.0"
+jooq = "3.20.1"
+flyway = "11.3.4"
+logback = "1.5.17"
+koin-ktor = "4.1.0-Beta5"
+io-r2dbc-r2dbc-pool = "1.0.2.RELEASE"
+io-projectreactor-kotlin-reactor-kotlin-extensions = "1.2.3"
 kotest = "5.9.1"
 io-kotest-extensions-kotest-assertions-ktor = "2.0.0"
 io-kotest-extensions-kotest-extensions-testcontainers = "2.0.2"
-org-postgresql-postgresql = "42.7.3"
-org-postgresql-r2dbc-postgresql = "1.0.5.RELEASE"
-org-testcontainers-postgresql = "1.19.8"
-org-assertj-assertj-db = "2.0.2"
+org-postgresql-postgresql = "42.7.5"
+org-postgresql-r2dbc-postgresql = "1.0.7.RELEASE"
+org-testcontainers-postgresql = "1.20.5"
+org-assertj-assertj-db = "3.0.0"
 
 [libraries]
 org-flywaydb-flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
@@ -24,9 +24,8 @@ org-jooq-jooq-kotlin = { group = "org.jooq", name = "jooq-kotlin", version.ref =
 org-jooq-jooq-kotlin-coroutines = { group = "org.jooq", name = "jooq-kotlin-coroutines", version.ref = "jooq" }
 org-jooq-jooq-meta = { group = "org.jooq", name = "jooq-meta", version.ref = "jooq" }
 org-jooq-jooq-codegen = { group = "org.jooq", name = "jooq-codegen", version.ref = "jooq" }
-org-jetbrains-kotlin-kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 ch-qos-logback-logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
-io-insert-koin-koin-ktor = { group = "io.insert-koin", name = "koin-ktor", version.ref = "koin-ktor" }
+io-insert-koin-koin-ktor = { group = "io.insert-koin", name = "koin-ktor3", version.ref = "koin-ktor" }
 io-insert-koin-koin-logger-slf4j = { group = "io.insert-koin", name = "koin-logger-slf4j", version.ref = "koin-ktor" }
 io-r2dbc-r2dbc-pool = { group = "io.r2dbc", name = "r2dbc-pool", version.ref = "io-r2dbc-r2dbc-pool" }
 io-projectreactor-kotlin-reactor-kotlin-extensions = { group = "io.projectreactor.kotlin", name = "reactor-kotlin-extensions", version.ref = "io-projectreactor-kotlin-reactor-kotlin-extensions" }
@@ -40,14 +39,15 @@ org-postgresql-postgresql = { group = "org.postgresql", name = "postgresql", ver
 org-postgresql-r2dbc-postgresql = { group = "org.postgresql", name = "r2dbc-postgresql", version.ref = "org-postgresql-r2dbc-postgresql" }
 org-testcontainers-postgresql = { group = "org.testcontainers", name = "postgresql", version.ref = "org-testcontainers-postgresql" }
 org-assertj-assertj-db = { group = "org.assertj", name = "assertj-db", version.ref = "org-assertj-assertj-db" }
-io-ktor-ktor-server-core-jvm = { group = "io.ktor", name = "ktor-server-core-jvm" }
-io-ktor-ktor-server-netty-jvm = { group = "io.ktor", name = "ktor-server-netty-jvm" }
-io-ktor-ktor-server-content-negotiation-jvm = { group = "io.ktor", name = "ktor-server-content-negotiation-jvm" }
+io-ktor-ktor-server-core = { group = "io.ktor", name = "ktor-server-core" }
+io-ktor-ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty" }
+io-ktor-ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-content-negotiation" }
 io-ktor-ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json" }
 io-ktor-ktor-server-request-validation = { group = "io.ktor", name = "ktor-server-request-validation" }
 io-ktor-ktor-server-status-pages = { group = "io.ktor", name = "ktor-server-status-pages" }
 io-ktor-ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation" }
-io-ktor-ktor-server-tests-jvm = { group = "io.ktor", name = "ktor-server-tests-jvm" }
+io-ktor-ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host" }
+org-jetbrains-kotlin-kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
 
 [plugins]
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
@@ -57,3 +57,4 @@ co-uzzu-dotenv-gradle = { id = "co.uzzu.dotenv.gradle", version.ref = "co-uzzu-d
 org-jlleitschuh-gradle-ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "org-jlleitschuh-gradle-ktlint" }
 org-jooq-jooq-codegen-gradle = { id = "org.jooq.jooq-codegen-gradle", version.ref = "jooq" }
 org-flywaydb-flyway = { id = "org.flywaydb.flyway", version.ref = "flyway" }
+jacoco = { id = "jacoco" }
