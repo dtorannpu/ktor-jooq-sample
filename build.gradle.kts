@@ -15,6 +15,7 @@ plugins {
     alias(libs.plugins.org.jooq.jooq.codegen.gradle)
     alias(libs.plugins.org.flywaydb.flyway)
     alias(libs.plugins.co.uzzu.dotenv.gradle)
+    alias(libs.plugins.jacoco)
 }
 
 group = "com.example"
@@ -73,6 +74,11 @@ dependencies {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
 }
 
 flyway {
