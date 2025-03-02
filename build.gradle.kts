@@ -1,3 +1,5 @@
+import org.flywaydb.gradle.task.AbstractFlywayTask
+
 val kotlinVersion: String by project
 val logbackVersion: String by project
 val kotestVersion: String by project
@@ -235,5 +237,11 @@ ktlint {
             element.file.path.contains("generated-sources")
         }
         include("**/kotlin/**")
+    }
+}
+
+tasks {
+    withType<AbstractFlywayTask> {
+        notCompatibleWithConfigurationCache("because https://github.com/flyway/flyway/issues/3550")
     }
 }
