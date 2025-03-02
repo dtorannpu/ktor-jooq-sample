@@ -36,9 +36,9 @@ repositories {
 }
 
 dependencies {
-    implementation(libs.io.ktor.ktor.server.core.jvm)
-    implementation(libs.io.ktor.ktor.server.netty.jvm)
-    implementation(libs.io.ktor.ktor.server.content.negotiation.jvm)
+    implementation(libs.io.ktor.ktor.server.core)
+    implementation(libs.io.ktor.ktor.server.netty)
+    implementation(libs.io.ktor.ktor.server.content.negotiation)
     implementation(libs.io.ktor.ktor.serialization.kotlinx.json)
     implementation(libs.io.ktor.ktor.server.request.validation)
     implementation(libs.io.ktor.ktor.server.status.pages)
@@ -52,8 +52,8 @@ dependencies {
     implementation(libs.io.projectreactor.kotlin.reactor.kotlin.extensions)
     implementation(libs.io.ktor.ktor.client.content.negotiation)
     testImplementation(libs.org.flywaydb.flyway.core)
-    testImplementation(libs.io.ktor.ktor.server.tests.jvm)
-    testImplementation(libs.org.jetbrains.kotlin.kotlin.test.junit)
+    testImplementation(libs.io.ktor.ktor.server.test.host)
+    testImplementation(libs.org.jetbrains.kotlin.kotlin.test)
     testImplementation(libs.io.kotest.kotest.runner.junit5)
     testImplementation(libs.io.kotest.kotest.assertions.core)
     testImplementation(libs.io.kotest.kotest.assertions.json)
