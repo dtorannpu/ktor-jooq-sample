@@ -1,23 +1,17 @@
-val kotlinVersion: String by project
-val logbackVersion: String by project
-val kotestVersion: String by project
-val jooqVersion: String by project
-val koinKtor: String by project
-
 buildscript {
     dependencies {
-        classpath("org.flywaydb:flyway-database-postgresql:10.15.0")
+        classpath(libs.org.flywaydb.flyway.database.postgresql)
     }
 }
 
 plugins {
-    kotlin("jvm") version "2.0.0"
-    id("io.ktor.plugin")
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
-    id("org.jlleitschuh.gradle.ktlint")
-    id("org.jooq.jooq-codegen-gradle")
-    id("org.flywaydb.flyway")
-    id("co.uzzu.dotenv.gradle") version "4.0.0"
+    alias(libs.plugins.org.jetbrains.kotlin.jvm)
+    alias(libs.plugins.org.jetbrains.kotlin.plugin.serialization)
+    alias(libs.plugins.io.ktor.plugin)
+    alias(libs.plugins.org.jlleitschuh.gradle.ktlint)
+    alias(libs.plugins.org.jooq.jooq.codegen.gradle)
+    alias(libs.plugins.org.flywaydb.flyway)
+    alias(libs.plugins.co.uzzu.dotenv.gradle)
 }
 
 group = "com.example"
@@ -39,39 +33,39 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-server-netty-jvm")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm")
-    implementation("io.ktor:ktor-serialization-kotlinx-json")
-    implementation("io.ktor:ktor-server-request-validation")
-    implementation("io.ktor:ktor-server-status-pages")
-    implementation("ch.qos.logback:logback-classic:$logbackVersion")
-    implementation("org.jooq:jooq:$jooqVersion")
-    implementation("org.jooq:jooq-kotlin:$jooqVersion")
-    implementation("org.jooq:jooq-kotlin-coroutines:$jooqVersion")
-    implementation("io.insert-koin:koin-ktor:$koinKtor")
-    implementation("io.insert-koin:koin-logger-slf4j:$koinKtor")
-    implementation("io.r2dbc:r2dbc-pool:1.0.1.RELEASE")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.2")
-    implementation("io.ktor:ktor-client-content-negotiation")
-    testImplementation("org.flywaydb:flyway-core:10.15.2")
-    testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
-    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
-    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
-    testImplementation("io.kotest.extensions:kotest-assertions-ktor:2.0.0")
-    testImplementation("io.kotest.extensions:kotest-extensions-testcontainers:2.0.2")
-    testImplementation("io.kotest:kotest-assertions-json:$kotestVersion")
-    testImplementation("org.testcontainers:postgresql:1.19.8")
-    testImplementation("org.assertj:assertj-db:2.0.2")
-    runtimeOnly("org.postgresql:postgresql:42.7.3")
-    testRuntimeOnly("org.postgresql:postgresql:42.7.3")
-    testRuntimeOnly("org.flywaydb:flyway-database-postgresql:10.15.0")
-    runtimeOnly("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
-    jooqCodegen("org.postgresql:postgresql:42.7.3")
-    jooqCodegen("org.jooq:jooq:$jooqVersion")
-    jooqCodegen("org.jooq:jooq-meta:$jooqVersion")
-    jooqCodegen("org.jooq:jooq-codegen:$jooqVersion")
+    implementation(libs.io.ktor.ktor.server.core.jvm)
+    implementation(libs.io.ktor.ktor.server.netty.jvm)
+    implementation(libs.io.ktor.ktor.server.content.negotiation.jvm)
+    implementation(libs.io.ktor.ktor.serialization.kotlinx.json)
+    implementation(libs.io.ktor.ktor.server.request.validation)
+    implementation(libs.io.ktor.ktor.server.status.pages)
+    implementation(libs.ch.qos.logback.logback.classic)
+    implementation(libs.org.jooq.jooq)
+    implementation(libs.org.jooq.jooq.kotlin)
+    implementation(libs.org.jooq.jooq.kotlin.coroutines)
+    implementation(libs.io.insert.koin.koin.ktor)
+    implementation(libs.io.insert.koin.koin.logger.slf4j)
+    implementation(libs.io.r2dbc.r2dbc.pool)
+    implementation(libs.io.projectreactor.kotlin.reactor.kotlin.extensions)
+    implementation(libs.io.ktor.ktor.client.content.negotiation)
+    testImplementation(libs.org.flywaydb.flyway.core)
+    testImplementation(libs.io.ktor.ktor.server.tests.jvm)
+    testImplementation(libs.org.jetbrains.kotlin.kotlin.test.junit)
+    testImplementation(libs.io.kotest.kotest.runner.junit5)
+    testImplementation(libs.io.kotest.kotest.assertions.core)
+    testImplementation(libs.io.kotest.kotest.assertions.json)
+    testImplementation(libs.io.kotest.extensions.kotest.assertions.ktor)
+    testImplementation(libs.io.kotest.extensions.kotest.extensions.testcontainers)
+    testImplementation(libs.org.testcontainers.postgresql)
+    testImplementation(libs.org.assertj.assertj.db)
+    runtimeOnly(libs.org.postgresql.postgresql)
+    testRuntimeOnly(libs.org.postgresql.postgresql)
+    testRuntimeOnly(libs.org.flywaydb.flyway.database.postgresql)
+    runtimeOnly(libs.org.postgresql.r2dbc.postgresql)
+    jooqCodegen(libs.org.postgresql.postgresql)
+    jooqCodegen(libs.org.jooq.jooq)
+    jooqCodegen(libs.org.jooq.jooq.meta)
+    jooqCodegen(libs.org.jooq.jooq.codegen)
 }
 
 tasks.withType<Test>().configureEach {
