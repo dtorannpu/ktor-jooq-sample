@@ -1,5 +1,4 @@
 import org.flywaydb.gradle.task.AbstractFlywayTask
-import org.jooq.codegen.gradle.CodegenTask
 
 buildscript {
     dependencies {
@@ -244,8 +243,5 @@ ktlint {
 tasks {
     withType<AbstractFlywayTask> {
         notCompatibleWithConfigurationCache("because https://github.com/flyway/flyway/issues/3550")
-    }
-    withType<CodegenTask> {
-        notCompatibleWithConfigurationCache("because https://github.com/jOOQ/jOOQ/issues/16997")
     }
 }
