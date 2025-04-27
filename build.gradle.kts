@@ -1,4 +1,5 @@
 import org.flywaydb.gradle.task.AbstractFlywayTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 buildscript {
     dependencies {
@@ -20,11 +21,19 @@ plugins {
 group = "com.example"
 version = "0.0.1"
 
+val javaVersion = System.getenv("JAVA_VERSION") ?: "21"
+
 application {
     mainClass.set("com.example.ApplicationKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(javaVersion)
+    }
 }
 
 kotlin.sourceSets.main {
@@ -69,6 +78,13 @@ dependencies {
     jooqCodegen(libs.org.jooq.jooq)
     jooqCodegen(libs.org.jooq.jooq.meta)
     jooqCodegen(libs.org.jooq.jooq.codegen)
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget.set(JvmTarget.fromTarget(javaVersion))
+    }
 }
 
 tasks.withType<Test>().configureEach {

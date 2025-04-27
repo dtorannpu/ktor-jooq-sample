@@ -13,15 +13,24 @@ jobs:
       DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: ${{ secrets.DB_NAME }}
       DB_PORT: ${{ secrets.DB_PORT }}
+    strategy:
+      matrix:
+        distribution: ["temurin"]
+        java-version: ["21", "24"]
     steps:
+      - name: Java version
+        env:
+          JAVA_VERSION: ${{ matrix.java-version }}
+        run: echo $JAVA_VERSION
+
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Set up JDK 21
+      - name: Set up JDK ${{ matrix.distribution }} ${{ matrix.java-version }}
         uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
-          distribution: "temurin"
-          java-version: "21"
+          distribution: ${{ matrix.distribution }}
+          java-version: ${{ matrix.java-version }}
           cache: "gradle"
 
       - name: Start docker container
