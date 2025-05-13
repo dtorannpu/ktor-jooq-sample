@@ -16,6 +16,7 @@ org-postgresql-postgresql = "42.7.5"
 org-postgresql-r2dbc-postgresql = "1.0.7.RELEASE"
 org-testcontainers-postgresql = "1.21.0"
 org-assertj-assertj-db = "3.0.0"
+jackson = "2.19.0"
 
 [libraries]
 org-flywaydb-flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
@@ -48,6 +49,7 @@ io-ktor-ktor-server-status-pages = { group = "io.ktor", name = "ktor-server-stat
 io-ktor-ktor-client-content-negotiation = { group = "io.ktor", name = "ktor-client-content-negotiation" }
 io-ktor-ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host" }
 org-jetbrains-kotlin-kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "kotlin" }
+com-fasterxml-jackson-core-jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
 
 [plugins]
 org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
