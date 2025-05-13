@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.io.r2dbc.r2dbc.pool)
     implementation(libs.io.projectreactor.kotlin.reactor.kotlin.extensions)
     implementation(libs.io.ktor.ktor.client.content.negotiation)
+    implementation(libs.com.fasterxml.jackson.core.jackson.databind)
     testImplementation(libs.org.flywaydb.flyway.core)
     testImplementation(libs.io.ktor.ktor.server.test.host)
     testImplementation(libs.org.jetbrains.kotlin.kotlin.test)
