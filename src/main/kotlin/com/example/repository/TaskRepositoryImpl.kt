@@ -37,11 +37,10 @@ class TaskRepositoryImpl(
             .awaitSingle()
             .map { it[TASK.ID] }
 
-    override suspend fun delete(id: Int): Int {
-        return dslContext
+    override suspend fun delete(id: Int): Int =
+        dslContext
             .get()
             .deleteFrom(TASK)
             .where(TASK.ID.eq(id))
             .awaitSingle()
-    }
 }

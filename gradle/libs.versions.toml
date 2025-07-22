@@ -2,7 +2,7 @@
 kotlin = "2.2.0"
 ktor = "3.2.2"
 co-uzzu-dotenv-gradle = "4.0.0"
-org-jlleitschuh-gradle-ktlint = "12.3.0"
+org-jlleitschuh-gradle-ktlint = "13.0.0"
 jooq = "3.20.5"
 flyway = "11.10.3"
 logback = "1.5.18"
