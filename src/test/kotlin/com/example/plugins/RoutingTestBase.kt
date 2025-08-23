@@ -14,7 +14,7 @@ abstract class RoutingTestBase : FunSpec() {
 
     companion object {
         val db =
-            PostgreSQLContainer("postgres:16.2").apply {
+            PostgreSQLContainer("postgres:17.6").apply {
                 waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofMinutes(1)))
             }
 

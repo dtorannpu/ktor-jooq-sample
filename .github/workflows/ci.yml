@@ -15,7 +15,7 @@ jobs:
       DB_PORT: 5432
     services:
       db:
-        image: postgres:17.4
+        image: postgres:17.6
         env:
           POSTGRES_DB: ${{ secrets.DB_NAME }}
           POSTGRES_USER: ${{ secrets.DB_USER }}
