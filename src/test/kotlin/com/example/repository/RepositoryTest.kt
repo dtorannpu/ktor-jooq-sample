@@ -47,7 +47,7 @@ abstract class RepositoryTest : FunSpec() {
     }
 
     companion object {
-        private val db = PostgreSQLContainer("postgres:16.2")
+        private val db = PostgreSQLContainer("postgres:17.6")
 
         init {
             db.start()
