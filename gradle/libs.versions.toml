@@ -14,7 +14,7 @@ org-postgresql-postgresql = "42.7.8"
 org-postgresql-r2dbc-postgresql = "1.1.0.RELEASE"
 org-testcontainers-postgresql = "1.21.3"
 org-assertj-assertj-db = "3.0.0"
-jackson = "2.20.0"
+jackson = "2.20.1"
 
 [libraries]
 org-flywaydb-flyway-database-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
