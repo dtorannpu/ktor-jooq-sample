@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.2.21"
-ktor = "3.3.1"
+ktor = "3.3.2"
 co-uzzu-dotenv-gradle = "4.0.0"
 org-jlleitschuh-gradle-ktlint = "13.1.0"
 jooq = "3.20.8"
