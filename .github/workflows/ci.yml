@@ -15,7 +15,7 @@ jobs:
       DB_PORT: 5432
     services:
       db:
-        image: postgres:17.6
+        image: postgres:18.1
         env:
           POSTGRES_DB: ${{ secrets.DB_NAME }}
           POSTGRES_USER: ${{ secrets.DB_USER }}
@@ -30,7 +30,7 @@ jobs:
     strategy:
       matrix:
         distribution: ["temurin"]
-        java-version: ["21", "24"]
+        java-version: ["25"]
     steps:
       - name: Java version
         env:
