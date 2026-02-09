@@ -1,5 +1,5 @@
 [versions]
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 ktor = "3.4.0"
 co-uzzu-dotenv-gradle = "4.0.0"
 org-jlleitschuh-gradle-ktlint = "14.0.1"
