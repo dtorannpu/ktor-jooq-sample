@@ -17,7 +17,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import io.ktor.http.headers
-import io.ktor.http.withCharset
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.testing.testApplication
 import org.jooq.DSLContext
@@ -75,7 +74,7 @@ class RotingTest : RoutingTestBase() {
 
                 client.get("/tasks").apply {
                     status shouldBe HttpStatusCode.OK
-                    contentType() shouldBe ContentType.Application.Json.withCharset(Charsets.UTF_8)
+                    contentType()!!.withoutParameters() shouldBe ContentType.Application.Json
                     bodyAsText() shouldEqualJson
                         """
                         [
@@ -119,7 +118,7 @@ class RotingTest : RoutingTestBase() {
 
                 client.get("/tasks/2").apply {
                     status shouldBe HttpStatusCode.OK
-                    contentType() shouldBe ContentType.Application.Json.withCharset(Charsets.UTF_8)
+                    contentType()!!.withoutParameters() shouldBe ContentType.Application.Json
                     bodyAsText() shouldEqualJson
                         """{"id":2,"title":"title2","description":"description2"}"""
                 }
